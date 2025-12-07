@@ -1,8 +1,8 @@
-name: 🔄 Sync with .github repository
+name: 🔄 Sync with template repository
 
 on:
   schedule:
-    - cron: 0 9 1 * *
+    - cron: 0 9 1 JAN,APR,JUL,OCT *
   workflow_dispatch:
     inputs:
       isdryrun:
@@ -16,20 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch or tag
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT_ACTION_CI }}
 
       - name: actions-template-sync
-        uses: AndreasAugustin/actions-template-sync@v1.1.1
+        uses: AndreasAugustin/actions-template-sync@v2
         with:
           github_token: ${{ secrets.PAT_ACTION_CI }}
-          source_repo_path: Andrews-McMeel-Universal/.github
-          upstream_branch: main
-          pr_labels: maintenance
-          pr_commit_msg: 🔄 Synchronize with @Andrews-McMeel-Universal/.github
-          pr_title: 🔄 Sync with @Andrews-McMeel-Universal/.github
-          pr_branch_name_prefix: sync/dotgithub/
+          source_repo_path: Andrews-McMeel-Universal/${{ vars.SYNC_REPO }}
+          upstream_branch: ${{ vars.SYNC_REPO_BRANCH || 'main' }}
+          pr_labels: sync
+          pr_commit_msg: 🔄 Synchronize with @Andrews-McMeel-Universal/${{ vars.SYNC_REPO }}
+          pr_title: 🔄 Sync with @Andrews-McMeel-Universal/${{ vars.SYNC_REPO }}
+          pr_branch_name_prefix: sync/
           pr_reviewers: Andrews-McMeel-Universal/devops-engineers
           is_dry_run: ${{ inputs.isdryrun || 'false' }}
           git_user_name: amutechtest

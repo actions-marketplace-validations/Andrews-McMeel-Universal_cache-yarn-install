@@ -1,4 +1,4 @@
 .github/CODEOWNERS
-*.ps1
+.github/workflows/template-sync.yml
+action.yaml
 README.md
-Secrets-example.json

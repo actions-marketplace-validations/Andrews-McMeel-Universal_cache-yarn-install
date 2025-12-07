@@ -1,0 +1,13 @@
+name: 🗑️ Cleanup caches
+
+on:
+  pull_request:
+    types: [closed]
+  schedule:
+    - cron: 0 0 * * 0
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    name: Cleanup PR Caches
+    uses: Andrews-McMeel-Universal/reusable_workflows/.github/workflows/pr-clean-caches.yaml@latest
